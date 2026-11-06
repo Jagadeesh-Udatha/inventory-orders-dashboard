@@ -1,0 +1,14 @@
+# Whole stack: MongoDB, the Spring Boot API (built straight from its GitHub repo) and this dashboard.
+services:
+  mongo:
+    image: mongo:7
+  api:
+    build: https://github.com/Jagadeesh-Udatha/inventory-orders-api.git#main
+    environment:
+      MONGO_HOST: mongo
+      MONGO_DB: orders
+    depends_on: [mongo]
+  web:
+    build: .
+    ports: ["3000:80"]
+    depends_on: [api]
